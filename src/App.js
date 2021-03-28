@@ -3,15 +3,19 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 function App() {
-  const queryInfo = useQuery("pokemon", async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    // if (true) {
-    //   throw new Error("Test Error");
-    // }
-    return axios
-      .get("https://pokeapi.co/api/v2/pokemon")
-      .then((res) => res.data.results);
-  });
+  const queryInfo = useQuery(
+    "pokemon",
+    async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // if (true) {
+      //   throw new Error("Test Error");
+      // }
+      return axios
+        .get("https://pokeapi.co/api/v2/pokemon")
+        .then((res) => res.data.results);
+    },
+    { refetchOnWindowFocus: false }
+  );
   console.log("queryInfo", queryInfo);
   if (queryInfo.isLoading) {
     return <div>"Loading ..." </div>;
