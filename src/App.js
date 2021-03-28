@@ -14,7 +14,7 @@ function App() {
         .get("https://pokeapi.co/api/v2/pokemon")
         .then((res) => res.data.results);
     },
-    { refetchOnWindowFocus: false }
+    { refetchOnWindowFocus: true }
   );
   console.log("queryInfo", queryInfo);
   if (queryInfo.isLoading) {
@@ -23,13 +23,17 @@ function App() {
   if (queryInfo.isError) {
     return <div>{queryInfo.error.message}</div>;
   }
+
   if (queryInfo.isSuccess) {
     return (
-      <div>
-        {queryInfo.data?.map((result) => (
-          <div key={result.name}>{result.name}</div>
-        ))}
-      </div>
+      <>
+        <div>
+          {queryInfo.data?.map((result) => (
+            <div key={result.name}>{result.name}</div>
+          ))}
+        </div>
+        {queryInfo.isFetching && <div> *** Updating *** </div>}
+      </>
     );
   }
 }
